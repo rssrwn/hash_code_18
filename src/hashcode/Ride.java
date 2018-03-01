@@ -2,17 +2,19 @@ package hashcode;
 
 public class Ride {
 
-  private int rideNumber;
-  private Location startLocation;
-  private Location finishLocation;
-  private int earliestStartTime;
-  private int latestFinishTime;
+  private final int rideNumber;
+  private final Location startLocation;
+  private final Location finishLocation;
+  private final int distance;
+  private final int earliestStartTime;
+  private final int latestFinishTime;
 
   public Ride(int i, Location start, Location finish, int earliestStart,
       int latestFinish) {
     this.rideNumber = i;
     this.startLocation = start;
     this.finishLocation = finish;
+    this.distance = Location.calculateDistance(start, finish);
     this.earliestStartTime = earliestStart;
     this.latestFinishTime = latestFinish;
   }

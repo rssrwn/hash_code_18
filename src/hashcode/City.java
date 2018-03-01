@@ -8,9 +8,9 @@ public class City {
   private final int rows;
   private final int cols;
   private final int perRideBonus;
-  private List<Vehicle> vehicleList;
-  private List<Ride> rideList;
-  private int maxSteps;
+  private final int maxSteps;
+  private final List<Vehicle> vehicleList;
+  private final List<Ride> rideList;
 
   public City(int rows, int cols, int perRideBonus, int maxSteps,
       int numVehicles, List<Ride> rideList) {

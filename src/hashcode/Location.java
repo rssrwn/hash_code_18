@@ -1,5 +1,7 @@
 package hashcode;
 
+import static java.lang.Math.abs;
+
 public class Location {
 
   private int c;
@@ -8,6 +10,10 @@ public class Location {
   public Location(int x, int y) {
     this.c = x;
     this.r = y;
+  }
+
+  public static int calculateDistance(Location start, Location finish) {
+    return abs(start.c - finish.c) + abs(start.r - finish.r);
   }
 
   public int getC() {
