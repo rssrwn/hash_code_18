@@ -28,4 +28,8 @@ public class Vehicle {
         "location=" + location +
         "}\n";
   }
+
+  public int getIndex() {
+    return index;
+  }
 }
