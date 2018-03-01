@@ -1,6 +1,7 @@
 package hashcode.algo1;
 
 import hashcode.City;
+import hashcode.Parser;
 import hashcode.Ride;
 import hashcode.RideAssignment;
 import hashcode.Vehicle;
@@ -11,36 +12,48 @@ import java.util.PriorityQueue;
 
 public class Greedy {
 
-  private static class Pair<K, E> {
-    K key;
-    E elem;
+  private static class RidePair {
+    Ride ride;
+    Vehicle vehicle;
+    int finishTime;
 
-    public Pair(K key, E elem) {
-      this.key = key;
-      this.elem = elem;
+    public RidePair(Ride ride, Vehicle vehicle, int finishTime) {
+      this.ride = ride;
+      this.vehicle = vehicle;
+      this.finishTime = finishTime;
     }
   }
 
+  public static void main(String[] args) {
+    City city = Parser.parseCity("input_data/a_example.in");
+    greedySolution(city);
+  }
+
   public static RideAssignment greedySolution(City city) {
+    RideAssignment rideAssignment = new RideAssignment();
+
     ArrayList<Ride> sortedRidesByStartTime = new ArrayList<Ride>(city.getRideList());
     sortedRidesByStartTime.sort((r1, r2) -> Integer.compare(r1.getEarliestStartTime(), r2.getEarliestStartTime()));
 
     ArrayDeque<Vehicle> freeVehicles = new ArrayDeque<>(city.getVehicleList());
-    PriorityQueue<Pair<Vehicle, Ride>> busyVehicles = new PriorityQueue<>(
-        (p1, p2) -> Integer.compare(p1.elem.getLatestFinishTime(), p2.elem.getLatestFinishTime()));
+    PriorityQueue<RidePair> busyVehicles = new PriorityQueue<>(
+        (p1, p2) -> Integer.compare(p1.finishTime, p2.finishTime));
 
     long step = 0;
     int curRideIndex = 0;
     int nextRideFinish;
     while (step < city.getMaxSteps()) {
       nextRideFinish = Integer.MAX_VALUE;
+      //System.out.println("step " + step);
 
-      Iterator<Pair<Vehicle, Ride>> busyIt = busyVehicles.iterator();
+      Iterator<RidePair> busyIt = busyVehicles.iterator();
       while (busyIt.hasNext()) {
-        Pair<Vehicle, Ride> ridePair = busyIt.next();
-        if (step >= ridePair.elem.getLatestFinishTime()) {
+        RidePair ridePair = busyIt.next();
+
+        if (step >= ridePair.finishTime) {
           busyIt.remove();
-          System.out.printf("vehicle %d ride %d removed from busy at step %d\n", ridePair.key.getIndex(), ridePair.elem.getIndex(), step);
+          freeVehicles.add(ridePair.vehicle);
+          //System.out.printf("vehicle %d ride %d removed from busy at step %d\n", ridePair.vehicle.getIndex(), ridePair.ride.getIndex(), step);
         } else {
           break;
         }
@@ -64,16 +77,17 @@ public class Greedy {
         if (bestRide != null) {
           nextRideFinish = Math.min(nextRideFinish, rideFinishTime((int) step, bestRide, vehicle));
           freeIt.remove();
-          busyVehicles.add(new Pair<Vehicle, Ride>(vehicle, bestRide));
-          System.out.printf("vehicle %d assigned ride %d\n", vehicle.getIndex(), bestRide.getIndex());
-          System.out.printf("vehicle %d ride %d added to busy at step %d\n", vehicle.getIndex(), bestRide.getIndex(), step);
+          sortedRidesByStartTime.remove(bestRide);
+          busyVehicles.add(new RidePair(bestRide, vehicle, nextRideFinish));
+          rideAssignment.addAssignment(vehicle, bestRide);
+          //System.out.printf("vehicle %d ride %d added to busy at step %d\n", vehicle.getIndex(), bestRide.getIndex(), step);
         }
       }
 
       step += nextRideFinish;
     }
 
-    return null;
+    return rideAssignment;
   }
 
   private static int rideScore(City city, int step, Ride ride, Vehicle vehicle) {
