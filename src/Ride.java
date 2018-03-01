@@ -1,16 +1,22 @@
 public class Ride {
 
+  private int rideNumber;
   private Location startLocation;
   private Location finishLocation;
   private int earliestStartTime;
   private int latestFinishTime;
 
-  public Ride(Location start, Location finish, int earliestStart,
+  public Ride(int i, Location start, Location finish, int earliestStart,
       int latestFinish) {
+    this.rideNumber = i;
     this.startLocation = start;
     this.finishLocation = finish;
     this.earliestStartTime = earliestStart;
     this.latestFinishTime = latestFinish;
+  }
+
+  public int getRideNumber() {
+    return rideNumber;
   }
 
   public Location getStartLocation() {
