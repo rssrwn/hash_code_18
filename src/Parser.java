@@ -3,6 +3,10 @@ import java.io.FileReader;
 
 public class Parser {
 
+  public static void main(String[] args) {
+
+  }
+
   public Parser() {
 
   }
