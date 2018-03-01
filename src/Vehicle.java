@@ -14,4 +14,10 @@ public class Vehicle {
     this.location = location;
   }
 
+  @Override
+  public String toString() {
+    return "Vehicle{" +
+        "location=" + location +
+        "}\n";
+  }
 }

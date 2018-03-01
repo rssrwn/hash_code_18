@@ -35,4 +35,14 @@ public class Ride {
     return latestFinishTime;
   }
 
+  @Override
+  public String toString() {
+    return "Ride{" +
+        "rideNumber=" + rideNumber +
+        ", startLocation=" + startLocation +
+        ", finishLocation=" + finishLocation +
+        ", earliestStartTime=" + earliestStartTime +
+        ", latestFinishTime=" + latestFinishTime +
+        "}\n";
+  }
 }

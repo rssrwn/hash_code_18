@@ -30,7 +30,7 @@ public class City {
 
   @Override
   public String toString() {
-    return "City{" +
+    return "\nCity{" +
         "\nrows=" + rows +
         "\ncols=" + cols +
         "\nperRideBonus=" + perRideBonus +

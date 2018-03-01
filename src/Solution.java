@@ -1,8 +1,8 @@
 public class Solution {
 
   public static void main(String[] args) {
-    City city = Parser.parseCity("a_example.in");
-    System.out.println(city);
+    City city = Parser.parseCity("input_data/a_example.in");
+    //System.out.println(city);
   }
 
 }
