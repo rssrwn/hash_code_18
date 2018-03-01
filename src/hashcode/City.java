@@ -25,7 +25,7 @@ public class City {
   private List<Vehicle> initVehicleList(int numVehicles) {
     List<Vehicle> vehicles = new ArrayList<>();
     for (int i = 0; i < numVehicles; i++) {
-      vehicles.add(new Vehicle(new Location(0, 0)));
+      vehicles.add(new Vehicle(new Location(0, 0), i));
     }
     return vehicles;
   }

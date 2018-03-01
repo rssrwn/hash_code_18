@@ -1,4 +1,4 @@
-package hashcode.algo1;
+package hashcode;
 
 import hashcode.Ride;
 import hashcode.Vehicle;

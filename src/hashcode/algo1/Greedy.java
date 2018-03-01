@@ -2,10 +2,10 @@ package hashcode.algo1;
 
 import hashcode.City;
 import hashcode.Ride;
+import hashcode.RideAssignment;
 import hashcode.Vehicle;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 
 public class Greedy {
