@@ -2,7 +2,7 @@ package hashcode;
 
 public class Ride {
 
-  private final int rideNumber;
+  private final int index;
   private final Location startLocation;
   private final Location finishLocation;
   private final int distance;
@@ -11,7 +11,7 @@ public class Ride {
 
   public Ride(int i, Location start, Location finish, int earliestStart,
       int latestFinish) {
-    this.rideNumber = i;
+    this.index = i;
     this.startLocation = start;
     this.finishLocation = finish;
     this.distance = Location.calculateDistance(start, finish);
@@ -19,8 +19,8 @@ public class Ride {
     this.latestFinishTime = latestFinish;
   }
 
-  public int getRideNumber() {
-    return rideNumber;
+  public int getIndex() {
+    return index;
   }
 
   public Location getStartLocation() {
@@ -46,7 +46,7 @@ public class Ride {
   @Override
   public String toString() {
     return "hashcode.Ride{" +
-        "rideNumber=" + rideNumber +
+        "index=" + index +
         ", startLocation=" + startLocation +
         ", finishLocation=" + finishLocation +
         ", earliestStartTime=" + earliestStartTime +
