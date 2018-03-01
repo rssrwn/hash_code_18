@@ -15,6 +15,7 @@ public class Solution {
 
   private static final String INPUT_EXT = ".in";
   private static final String OUTPUT_EXT = ".out";
+  private static int scoreSum = 0;
 
   public static void main(String[] args) {
     List<String> filenames = new ArrayList<>();
@@ -27,12 +28,18 @@ public class Solution {
     for (String filename : filenames) {
       generateSolution(filename);
     }
+
+    System.out.printf("Total score: %d\n", scoreSum);
   }
 
   private static void generateSolution(String filename) {
     City city = Parser.parseCity(filename + INPUT_EXT);
     RideAssignment assignment = Greedy.greedySolution(city);
     String solution = assignment.getSolution();
+
+    int score = assignment.getScore();
+    scoreSum += score;
+    System.out.printf("%s - score %d\n", filename, score);
 
     try {
       PrintWriter printWriter = new PrintWriter(filename + OUTPUT_EXT);

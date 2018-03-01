@@ -86,6 +86,7 @@ public class Greedy {
           sortedRidesByStartTime.remove(bestRide);
           busyVehicles.add(new RidePair(bestRide, vehicle, rideFinish));
           rideAssignment.addAssignment(vehicle, bestRide);
+          rideAssignment.addScore(bestRide.getDistance() + (getsBonus(city, (int) step, bestRide, vehicle) ? city.getPerRideBonus() : 0));
           //System.out.printf("step %d: vehicle %d ride %d added to busy finish at %d\n", step, vehicle.getIndex(), bestRide.getIndex(), rideFinish);
         }
       }
@@ -108,6 +109,13 @@ public class Greedy {
 
     int rideScore = ride.getDistance() + bonus - waitTime;
     return rideScore;
+  }
+
+  private static boolean getsBonus(City city, int step, Ride ride, Vehicle vehicle) {
+    int distanceToRideStart = vehicle.getLocation().distanceTo(ride.getStartLocation());
+    int timeUntilStart = ride.getEarliestStartTime() - step;
+
+    return distanceToRideStart < timeUntilStart;
   }
 
   private static boolean canPerformRide(City city, int step, Ride ride, Vehicle vehicle) {
