@@ -17,18 +17,21 @@ public class Solution {
 
   private static final String INPUT_EXT = ".in";
   private static final String OUTPUT_EXT = ".out";
+  private static int scoreSum = 0;
 
   public static void main(String[] args) {
     List<String> filenames = new ArrayList<>();
     filenames.add("input_data/a_example");
-    //filenames.add("input_data/b_should_be_easy");
-    //filenames.add("input_data/c_no_hurry");
-    //filenames.add("input_data/d_metropolis");
-    //filenames.add("input_data/e_high_bonus");
+    filenames.add("input_data/b_should_be_easy");
+    filenames.add("input_data/c_no_hurry");
+    filenames.add("input_data/d_metropolis");
+    filenames.add("input_data/e_high_bonus");
 
     for (String filename : filenames) {
       generateSolution(filename);
     }
+
+    System.out.printf("Total score: %d\n", scoreSum);
   }
 
   private static void generateSolution(String filename) {
@@ -38,6 +41,10 @@ public class Solution {
     RideAssignment assignment = traverseRides.getRideAssignment();
     String solution = assignment.getSolution();
     System.out.println(solution);
+
+    int score = assignment.getScore();
+    scoreSum += score;
+    System.out.printf("%s - score %d\n", filename, score);
 
     try {
       PrintWriter printWriter = new PrintWriter(filename + OUTPUT_EXT);

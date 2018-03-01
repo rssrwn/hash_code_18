@@ -11,9 +11,11 @@ public class RideAssignment {
   private static final char SPACE = ' ';
 
   private final Map<Vehicle, List<Ride>> rideAssignment;
+  private int score;
 
   public RideAssignment() {
     this.rideAssignment = new HashMap<>();
+    this.score = score;
   }
 
   public void addAssignment(Vehicle vehicle, Ride ride) {
@@ -26,6 +28,10 @@ public class RideAssignment {
     List<Ride> rides = new ArrayList<>();
     rides.add(ride);
     rideAssignment.put(vehicle, rides);
+  }
+
+  public void addScore(int score) {
+    this.score += score;
   }
 
   public List<Ride> getRides(Vehicle vehicle) {
@@ -51,5 +57,9 @@ public class RideAssignment {
       solution.append(NEW_LINE);
     }
     return solution.toString();
+  }
+
+  public int getScore() {
+    return score;
   }
 }
