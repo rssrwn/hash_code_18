@@ -53,7 +53,7 @@ public class Greedy {
         if (step >= ridePair.finishTime) {
           busyIt.remove();
           freeVehicles.add(ridePair.vehicle);
-          //System.out.printf("vehicle %d ride %d removed from busy at step %d\n", ridePair.vehicle.getIndex(), ridePair.ride.getIndex(), step);
+          System.out.printf("vehicle %d ride %d removed from busy at step %d\n", ridePair.vehicle.getIndex(), ridePair.ride.getIndex(), step);
         } else {
           break;
         }
@@ -80,7 +80,7 @@ public class Greedy {
           sortedRidesByStartTime.remove(bestRide);
           busyVehicles.add(new RidePair(bestRide, vehicle, nextRideFinish));
           rideAssignment.addAssignment(vehicle, bestRide);
-          //System.out.printf("vehicle %d ride %d added to busy at step %d\n", vehicle.getIndex(), bestRide.getIndex(), step);
+          System.out.printf("vehicle %d ride %d added to busy at step %d\n", vehicle.getIndex(), bestRide.getIndex(), step);
         }
       }
 

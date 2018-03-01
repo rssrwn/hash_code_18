@@ -1,5 +1,6 @@
 package hashcode;
 
+import hashcode.algo1.Greedy;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,8 +29,8 @@ public class Solution {
   }
 
   private static void generateSolution(String filename) {
-    City city = Parser.parseCity(filename);
-    RideAssignment assignment = algo.getAssignment(filename + INPUT_EXT);
+    City city = Parser.parseCity(filename + INPUT_EXT);
+    RideAssignment assignment = Greedy.greedySolution(city);
     String solution = assignment.getSolution();
 
     try {
