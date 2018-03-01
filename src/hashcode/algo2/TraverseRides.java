@@ -32,17 +32,29 @@ public class TraverseRides {
     float bestScore = -1;
     Vehicle currVehicle = vehicles.get(0);
     for (Vehicle vehicle : vehicles) {
-      float score = score(vehicle, ride, vehicleSimTimes, city);
-      System.out.println("score " + score + " vehicle " + vehicle.getIndex() + " ride " + ride.getIndex());
+      float score = score2(vehicle, ride, vehicleSimTimes, city);
+      //System.out.println("score " + score + " vehicle " + vehicle.getIndex() + " ride " + ride.getIndex());
       if (score > bestScore) {
         bestScore = score;
         currVehicle = vehicle;
       }
     }
-    rideAssignment.addAssignment(currVehicle, ride);
+    if (bestScore >= -1) {
+      int score = ride.getDistance();
+      int distanceToRideStart = currVehicle.getLocation().distanceTo(ride.getStartLocation());
+      int timeUntilStart = ride.getEarliestStartTime() - vehicleSimTimes.get(currVehicle.getIndex());
+      int bonus = distanceToRideStart < timeUntilStart ? city.getPerRideBonus() : 0;
+
+      rideAssignment.addAssignment(currVehicle, ride);
+      rideAssignment.addScore(score);
+    }
+    //System.out.println(bestScore);
+
     int dist = currVehicle.getLocation().distanceTo(ride.getStartLocation());
     int totalDist = dist + ride.getDistance();
     int wait = waitTime(currVehicle, ride, vehicleSimTimes);
+    //System.out.printf("step %d: vehicle %d ride %d added to busy finish at %d\n", vehicleSimTimes.get(currVehicle.getIndex()),
+    //    currVehicle.getIndex(), ride.getIndex(), totalDist + wait);
     currVehicle.setLocation(ride.getFinishLocation());
     updateSimTime(currVehicle, totalDist + wait);
   }
@@ -56,9 +68,16 @@ public class TraverseRides {
     return vehicleSimTimes.get(vehicle.getIndex());
   }
 
-  public static boolean canCompleteRide(Vehicle vehicle, Ride ride, List<Integer> simTimes) {
+  public static boolean canCompleteRide(Vehicle vehicle, Ride ride, List<Integer> simTimes, City city) {
+    //System.out.println(" vehicle " + vehicle.getIndex() + " ride " + ride.getIndex());
     int simTime = simTimes.get(vehicle.getIndex());
-    return simTime - ride.getDistance() <= ride.getLatestFinishTime();
+    boolean completeInTime = simTime - ride.getDistance() <= ride.getLatestFinishTime();
+    int wait = waitTime(vehicle, ride, simTimes);
+    int dist = vehicle.getLocation().distanceTo(ride.getStartLocation());
+    int finishTime = simTime + wait + dist + ride.getDistance();
+    boolean stuff = completeInTime && (finishTime < city.getMaxSteps());
+    //System.out.println(" vehicle " + vehicle.getIndex() + " ride " + ride.getIndex() + " canComplete " + stuff);
+    return completeInTime && (finishTime < city.getMaxSteps());
   }
 
   public static boolean canGetBonus(Vehicle vehicle, Ride ride, List<Integer> simTimes) {
@@ -78,7 +97,7 @@ public class TraverseRides {
   }
 
   public static float score(Vehicle vehicle, Ride ride, List<Integer> simTimes, City city) {
-    if (canCompleteRide(vehicle, ride, simTimes)) {
+    if (canCompleteRide(vehicle, ride, simTimes, city)) {
       int wait = waitTime(vehicle, ride, simTimes);
       int dist = vehicle.getLocation().distanceTo(ride.getStartLocation());
       float totalDist = dist + wait + ride.getDistance();
@@ -90,6 +109,20 @@ public class TraverseRides {
       }
       return ridden / totalDist;
     }
-    return -1;
+    return -2;
+  }
+
+  public static int score2(Vehicle vehicle, Ride ride, List<Integer> simTimes, City city) {
+    if (canCompleteRide(vehicle, ride, simTimes, city)) {
+      int distanceToRideStart = vehicle.getLocation().distanceTo(ride.getStartLocation());
+      int timeUntilStart = ride.getEarliestStartTime() - simTimes.get(vehicle.getIndex());
+
+      int bonus = distanceToRideStart < timeUntilStart ? city.getPerRideBonus() : 0;
+      int waitTime = Integer.max(timeUntilStart, distanceToRideStart);
+
+      int rideScore = ride.getDistance() + bonus - waitTime;
+      return rideScore;
+    }
+    return -2;
   }
 }
