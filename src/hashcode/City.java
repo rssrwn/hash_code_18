@@ -8,7 +8,7 @@ public class City {
   private final int rows;
   private final int cols;
   private final int perRideBonus;
-  private final int maxSteps;
+  private final long maxSteps;
   private final List<Vehicle> vehicleList;
   private final List<Ride> rideList;
 
@@ -50,7 +50,7 @@ public class City {
     return rideList;
   }
 
-  public int getMaxSteps() {
+  public long getMaxSteps() {
     return maxSteps;
   }
 
