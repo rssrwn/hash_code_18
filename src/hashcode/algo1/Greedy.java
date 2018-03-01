@@ -7,7 +7,10 @@ import hashcode.RideAssignment;
 import hashcode.Vehicle;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class Greedy {
@@ -27,6 +30,20 @@ public class Greedy {
   public static void main(String[] args) {
     City city = Parser.parseCity("input_data/a_example.in");
     greedySolution(city);
+  }
+
+  public static RideAssignment randomGreedySolution(City city) {
+    RideAssignment bestRideAssignment = null;
+
+    for (int i = 0; i < 10; i++) {
+      RideAssignment rideAssignment = greedySolution(city);
+      if (bestRideAssignment == null
+          || rideAssignment.getScore() > bestRideAssignment.getScore()) {
+        bestRideAssignment = rideAssignment;
+      }
+    }
+
+    return bestRideAssignment;
   }
 
   public static RideAssignment greedySolution(City city) {
@@ -63,6 +80,9 @@ public class Greedy {
         }
       }
 
+      int maxVehicles = freeVehicles.size();
+      float coldness = 2;
+
       Iterator<Vehicle> freeIt = freeVehicles.iterator();
       while (freeIt.hasNext()) {
         Vehicle vehicle = freeIt.next();
@@ -73,7 +93,7 @@ public class Greedy {
         for (int i = curRideIndex; i < sortedRidesByStartTime.size(); i++) {
           Ride ride = sortedRidesByStartTime.get(i);
           if (canPerformRide(city, (int) step, ride, vehicle)) {
-            int rideScore = rideScoreMaxScore(city, (int) step, ride, vehicle);
+            int rideScore = (int) (rideScoreMaxScore(city, (int) step, ride, vehicle) * (1f + ((0.5f - Math.random()) / coldness)));
             if (rideScore > bestScore) {
               bestScore = rideScore;
               bestRide = ride;
@@ -89,6 +109,7 @@ public class Greedy {
           rideAssignment.addScore(bestRide.getDistance() + (getsBonus((int) step, bestRide, vehicle) ? city.getPerRideBonus() : 0));
           //System.out.printf("step %d: vehicle %d ride %d added to busy finish at %d\n", step, vehicle.getIndex(), bestRide.getIndex(), rideFinish);
         }
+        coldness += 10f / maxVehicles;
       }
 
       if (busyVehicles.size() <= 0) {

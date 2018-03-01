@@ -34,7 +34,7 @@ public class Solution {
 
   private static void generateSolution(String filename) {
     City city = Parser.parseCity(filename + INPUT_EXT);
-    RideAssignment assignment = Greedy.greedySolution(city);
+    RideAssignment assignment = Greedy.randomGreedySolution(city);
     String solution = assignment.getSolution();
 
     int score = assignment.getScore();
