@@ -39,6 +39,10 @@ public class Ride {
     return latestFinishTime;
   }
 
+  public int getDistance() {
+    return distance;
+  }
+
   @Override
   public String toString() {
     return "hashcode.Ride{" +

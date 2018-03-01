@@ -16,6 +16,10 @@ public class Location {
     return abs(start.c - finish.c) + abs(start.r - finish.r);
   }
 
+  public int distanceTo(Location location) {
+    return calculateDistance(this, location);
+  }
+
   public int getC() {
     return c;
   }
