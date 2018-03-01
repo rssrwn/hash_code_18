@@ -73,7 +73,7 @@ public class Greedy {
         for (int i = curRideIndex; i < sortedRidesByStartTime.size(); i++) {
           Ride ride = sortedRidesByStartTime.get(i);
           if (canPerformRide(city, (int) step, ride, vehicle)) {
-            int rideScore = rideScore(city, (int) step, ride, vehicle);
+            int rideScore = rideScoreMaxScore(city, (int) step, ride, vehicle);
             if (rideScore > bestScore) {
               bestScore = rideScore;
               bestRide = ride;
@@ -86,7 +86,7 @@ public class Greedy {
           sortedRidesByStartTime.remove(bestRide);
           busyVehicles.add(new RidePair(bestRide, vehicle, rideFinish));
           rideAssignment.addAssignment(vehicle, bestRide);
-          rideAssignment.addScore(bestRide.getDistance() + (getsBonus(city, (int) step, bestRide, vehicle) ? city.getPerRideBonus() : 0));
+          rideAssignment.addScore(bestRide.getDistance() + (getsBonus((int) step, bestRide, vehicle) ? city.getPerRideBonus() : 0));
           //System.out.printf("step %d: vehicle %d ride %d added to busy finish at %d\n", step, vehicle.getIndex(), bestRide.getIndex(), rideFinish);
         }
       }
@@ -100,7 +100,7 @@ public class Greedy {
     return rideAssignment;
   }
 
-  private static int rideScore(City city, int step, Ride ride, Vehicle vehicle) {
+  private static int rideScoreMaxScore(City city, int step, Ride ride, Vehicle vehicle) {
     int distanceToRideStart = vehicle.getLocation().distanceTo(ride.getStartLocation());
     int timeUntilStart = ride.getEarliestStartTime() - step;
 
@@ -111,7 +111,18 @@ public class Greedy {
     return rideScore;
   }
 
-  private static boolean getsBonus(City city, int step, Ride ride, Vehicle vehicle) {
+  private static float rideScoreMaxEfficiency(City city, int step, Ride ride, Vehicle vehicle) {
+    int distanceToRideStart = vehicle.getLocation().distanceTo(ride.getStartLocation());
+    int timeUntilStart = ride.getEarliestStartTime() - step;
+
+    int bonus = distanceToRideStart < timeUntilStart ? city.getPerRideBonus() : 0;
+    int waitTime = Integer.max(timeUntilStart, distanceToRideStart);
+
+    int rideScore = ride.getDistance() + bonus;
+    return (float) rideScore / (ride.getDistance() + waitTime);
+  }
+
+  private static boolean getsBonus(int step, Ride ride, Vehicle vehicle) {
     int distanceToRideStart = vehicle.getLocation().distanceTo(ride.getStartLocation());
     int timeUntilStart = ride.getEarliestStartTime() - step;
 
