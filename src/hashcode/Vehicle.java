@@ -16,6 +16,10 @@ public class Vehicle {
     this.location = location;
   }
 
+  public boolean canCompleteRide(Ride ride) {
+    return false;
+  }
+
   @Override
   public String toString() {
     return "hashcode.Vehicle{" +
