@@ -1,6 +1,8 @@
 package hashcode;
 
 import hashcode.algo1.Greedy;
+import hashcode.algo2.TraverseRides;
+
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,8 +20,8 @@ public class Solution {
 
   public static void main(String[] args) {
     List<String> filenames = new ArrayList<>();
-    //filenames.add("input_data/a_example");
-    filenames.add("input_data/b_should_be_easy");
+    filenames.add("input_data/a_example");
+    //filenames.add("input_data/b_should_be_easy");
     //filenames.add("input_data/c_no_hurry");
     //filenames.add("input_data/d_metropolis");
     //filenames.add("input_data/e_high_bonus");
@@ -31,8 +33,11 @@ public class Solution {
 
   private static void generateSolution(String filename) {
     City city = Parser.parseCity(filename + INPUT_EXT);
-    RideAssignment assignment = Greedy.greedySolution(city);
+    //RideAssignment assignment = Greedy.greedySolution(city);
+    TraverseRides traverseRides = new TraverseRides(city);
+    RideAssignment assignment = traverseRides.getRideAssignment();
     String solution = assignment.getSolution();
+    System.out.println(solution);
 
     try {
       PrintWriter printWriter = new PrintWriter(filename + OUTPUT_EXT);
