@@ -1,3 +1,5 @@
+package hashcode;
+
 public class Vehicle {
 
   private Location location;
@@ -16,7 +18,7 @@ public class Vehicle {
 
   @Override
   public String toString() {
-    return "Vehicle{" +
+    return "hashcode.Vehicle{" +
         "location=" + location +
         "}\n";
   }

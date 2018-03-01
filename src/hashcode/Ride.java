@@ -1,3 +1,5 @@
+package hashcode;
+
 public class Ride {
 
   private int rideNumber;
@@ -37,7 +39,7 @@ public class Ride {
 
   @Override
   public String toString() {
-    return "Ride{" +
+    return "hashcode.Ride{" +
         "rideNumber=" + rideNumber +
         ", startLocation=" + startLocation +
         ", finishLocation=" + finishLocation +

@@ -1,3 +1,5 @@
+package hashcode;
+
 public class Location {
 
   private int c;
@@ -26,7 +28,7 @@ public class Location {
 
   @Override
   public String toString() {
-    return "Location{" +
+    return "hashcode.Location{" +
         "c=" + c +
         ", r=" + r +
         "}\n";

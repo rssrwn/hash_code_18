@@ -1,3 +1,5 @@
+package hashcode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +30,33 @@ public class City {
     return vehicles;
   }
 
+  public int getRows() {
+    return rows;
+  }
+
+  public int getCols() {
+    return cols;
+  }
+
+  public int getPerRideBonus() {
+    return perRideBonus;
+  }
+
+  public List<Vehicle> getVehicleList() {
+    return vehicleList;
+  }
+
+  public List<Ride> getRideList() {
+    return rideList;
+  }
+
+  public int getMaxSteps() {
+    return maxSteps;
+  }
+
   @Override
   public String toString() {
-    return "\nCity{" +
+    return "\nhashcode.City{" +
         "\nrows=" + rows +
         "\ncols=" + cols +
         "\nperRideBonus=" + perRideBonus +
