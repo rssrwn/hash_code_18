@@ -1,21 +1,43 @@
 package hashcode;
 
-import java.util.Arrays;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
 
-  public static void main(String[] args) {
-    City cityA = Parser.parseCity("input_data/a_example.in");
-    City cityB = Parser.parseCity("input_data/b_should_be_easy.in");
-    City cityC = Parser.parseCity("input_data/c_no_hurry.in");
-    City cityD = Parser.parseCity("input_data/d_metropolis.in");
-    City cityE = Parser.parseCity("input_data/e_high_bonus.in");
-    List<City> cities = Arrays.asList(cityA, cityB, cityC, cityD, cityE);
+  private static final String INPUT_EXT = ".in";
+  private static final String OUTPUT_EXT = ".out";
 
-    for (City city : cities) {
-      RideAssignment assignment = alngo.getAssignment(city);
-      System.out.println(assignment.outputSolution());
+  public static void main(String[] args) {
+    List<String> filenames = new ArrayList<>();
+    filenames.add("input_data/a_example");
+    filenames.add("input_data/b_should_be_easy");
+    filenames.add("input_data/c_no_hurry");
+    filenames.add("input_data/d_metropolis");
+    filenames.add("input_data/e_high_bonus");
+
+    for (String filename : filenames) {
+      generateSolution(filename);
+    }
+  }
+
+  private static void generateSolution(String filename) {
+    City city = Parser.parseCity(filename);
+    RideAssignment assignment = algo.getAssignment(filename + INPUT_EXT);
+    String solution = assignment.getSolution();
+
+    try {
+      PrintWriter printWriter = new PrintWriter(filename + OUTPUT_EXT);
+      printWriter.println(solution);
+      printWriter.close();
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException("generateSolution error");
     }
   }
 

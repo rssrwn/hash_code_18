@@ -32,7 +32,7 @@ public class RideAssignment {
     return rideAssignment.get(vehicle);
   }
 
-  private static String getRidesSolution(List<Ride> rides) {
+  private static String getVehicleSolution(List<Ride> rides) {
     StringBuilder ridesSolution = new StringBuilder();
 
     ridesSolution.append(rides.size());
@@ -43,11 +43,11 @@ public class RideAssignment {
     return ridesSolution.toString();
   }
 
-  public String outputSolution() {
+  public String getSolution() {
     StringBuilder solution = new StringBuilder();
 
     for (List<Ride> rides : rideAssignment.values()) {
-      solution.append(getRidesSolution(rides));
+      solution.append(getVehicleSolution(rides));
       solution.append(NEW_LINE);
     }
     return solution.toString();
