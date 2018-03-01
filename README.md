@@ -1,0 +1,2 @@
+# Hash Code
+### Hype
