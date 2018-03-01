@@ -14,12 +14,12 @@ public class Vehicle {
     return location;
   }
 
-  public void setLocation(Location location) {
-    this.location = location;
+  public int getIndex() {
+    return index;
   }
 
-  public boolean canCompleteRide(Ride ride) {
-    return false;
+  public void setLocation(Location location) {
+    this.location = location;
   }
 
   @Override
