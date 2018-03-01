@@ -23,7 +23,7 @@ public class TraverseRides {
       assignRide(ride, city.getVehicleList());
     }
   }
-  
+
   public RideAssignment getRideAssignment() {
     return rideAssignment;
   }
