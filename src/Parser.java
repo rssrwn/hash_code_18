@@ -7,8 +7,9 @@ import java.util.Scanner;
 public class Parser {
 
   private Parser() {
-
+    
   }
+
 
   public static City parseCity(String fileName) {
     try {
