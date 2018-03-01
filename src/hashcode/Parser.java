@@ -24,13 +24,6 @@ public class Parser {
       int maxSteps = scanner.nextInt();
       List<Ride> rides = parseRides(scanner, numRides);
 
-      System.out.printf("rows: %d\n", rows);
-      System.out.printf("cols: %d\n", cols);
-      System.out.printf("numVehicles: %d\n", numVehicles);
-      System.out.printf("numRides: %d\n", numRides);
-      System.out.printf("perRideBonus: %d\n", perRideBonus);
-      System.out.printf("maxSteps: %d\n", maxSteps);
-
       return new City(rows, cols, perRideBonus, maxSteps, numVehicles, rides);
     } catch (FileNotFoundException e) {
       throw new RuntimeException("parseCity error");
